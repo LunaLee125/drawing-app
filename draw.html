@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawing Program</title>
+
+    <style>
+        h1{
+            text-align: center;
+            text-decoration: underline;
+            background-color: rgb(81, 255, 0);
+            padding-top: 30px;
+            padding-bottom: 30px;
+            margin-top: 0px;
+        }
+        #drawingBoard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* div{
+            margin-top: 50px;
+            margin-left:50px;
+            margin-right:50px;
+        } */
+        p {
+            border: .01px solid rgb(204, 204, 204);
+            padding: 10px;
+            margin: -5px;
+            font-size: 24px;
+        }
+        .colored {
+            background-color: rgb(0, 0, 0);
+            border: .01px solid rgb(0, 0, 0);
+        }
+
+        .swatchstyle{
+            width: 10px;
+            display: flex;
+            flex-direction: row;
+            margin: 10px;
+        }
+
+        .swatchstyle:hover{
+            border: solid 10px black;
+        }
+
+        .swatchselected{
+            border: solid 10px black;
+        }
+
+        .settings{
+            background-color: grey;
+            padding: 30px;
+            position: absolute;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h1>Welcome to this drawing app!</h1>
+
+    <div class="settings">
+        <div>
+            <label>Width: </label><input type = "number" id = "w" value = "50">
+        </div>
+        <div>
+            <label>Height: </label><input type = "number" id = "h" value = "50">
+        </div>
+    
+        <label>Color: </label>
+        <div class= "presets">
+    
+        </div>
+    
+        <div>
+            <button>Create!</button>
+        </div>
+    </div>
+
+    <div id="drawingBoard">
+
+    </div>
+
+    <script>
+
+        function generateBoard(){
+            let drawingBoard = document.querySelector("div");
+            drawingBoard.replaceChildren();
+
+            let width = document.querySelector("#w");
+            let height = document.querySelector("#h");
+            for (let i = 0; i < Number(width.value); i++){
+                 //for (let j = 0; j < Number(height.value); j++){
+                    let elm = document.createElement("p");
+                    drawingBoard.appendChild(elm);
+                    elm.addEventListener("click", color);
+                 }
+            //}
+        }
+
+        let presetBar = document.querySelector(".presets");
+
+        let colors = ["red", "green", "blue", "pink"];
+
+        colors.forEach(function(color){
+            let swatch = document.createElement("p");
+            swatch.style.background = color;
+            swatch.classList.add("swatchstyle");
+            presetBar.appendChild(swatch);
+            
+            swatch.addEventListener("click", selected);
+        })
+
+        function color(event){
+            let clickedElm = event.currentTarget;
+            clickedElm.classList.toggle("colored");
+        }
+
+        function selected(event){
+            let selectedColor = event.currentTarget;
+            selectedColor.classList.toggle(".swatchselected");
+        }
+
+        let createButton = document.querySelector("button");
+        createButton.addEventListener("click", generateBoard)
+
+
+    </script>
+</body>
+</html>
